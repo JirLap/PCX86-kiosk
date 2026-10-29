@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import json
+
+from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import CONF_NAME
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.dispatcher import async_dispatcher_send
-from homeassistant.components import mqtt
-
-from homeassistant.const import CONF_NAME
 
 from .const import CONF_DEVICE_ID, DOMAIN, PLATFORMS
 
@@ -30,7 +31,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             payload = msg.payload
             if isinstance(payload, bytes):
                 payload = payload.decode()
-            import json
             state = json.loads(payload)
             if not isinstance(state, dict):
                 return
@@ -39,7 +39,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.data[DOMAIN][entry.entry_id]["status"] = state
         async_dispatcher_send(hass, SIGNAL_STATUS.format(entry.entry_id))
 
-    await mqtt.async_subscribe(hass, f"{topic_root}/status", status_received, qos=1)
+    hass.data[DOMAIN][entry.entry_id]["unsubscribe"] = await mqtt.async_subscribe(
+        hass, f"{topic_root}/status", status_received, qos=1
+    )
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 
@@ -47,7 +49,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a panel."""
     if unload_ok := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
-        hass.data[DOMAIN].pop(entry.entry_id)
+        data = hass.data[DOMAIN].pop(entry.entry_id)
+        data["unsubscribe"]()
     return unload_ok
 
 
