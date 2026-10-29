@@ -1,10 +1,10 @@
 {
   "domain": "panel_mqtt",
   "name": "Panel MQTT",
-  "codeowners": [],
+  "codeowners": ["@JirLap"],
   "config_flow": true,
   "dependencies": ["mqtt"],
   "documentation": "https://github.com/JirLap/PCX86-kiosk",
   "iot_class": "local_push",
-  "version": "0.1.0"
+  "version": "0.2.0"
 }

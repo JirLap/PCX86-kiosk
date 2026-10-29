@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import json
 
-from homeassistant.components import mqtt
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_NAME
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.dispatcher import async_dispatcher_send
+from homeassistant.components import mqtt
+
+from homeassistant.const import CONF_NAME
 
 from .const import CONF_DEVICE_ID, DOMAIN, PLATFORMS
 
