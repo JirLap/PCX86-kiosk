@@ -1,0 +1,17 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add a kiosk panel",
+        "description": "Home Assistant must already have the MQTT integration configured.",
+        "data": {
+          "name": "Panel name",
+          "device_id": "MQTT device ID"
+        }
+      }
+    },
+    "error": {
+      "invalid_device_id": "Use lowercase letters, numbers, hyphens, and underscores only."
+    }
+  }
+}
