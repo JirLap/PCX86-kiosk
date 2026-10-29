@@ -1,0 +1,5 @@
+{
+  "name": "PCX86-kiosk",
+  "render_readme": true,
+  "domains": ["panel_mqtt"]
+}
