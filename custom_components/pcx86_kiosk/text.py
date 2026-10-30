@@ -16,7 +16,7 @@ class PanelKioskUrlText(TextEntity):
     _attr_has_entity_name = True
     _attr_name = "Kiosk URL"
     _attr_icon = "mdi:link-variant"
-    _attr_mode = TextMode.URL
+    _attr_mode = TextMode.TEXT
     _attr_native_min = 1
     _attr_native_max = 2048
 
