@@ -1,0 +1,33 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "PCX86-kiosk",
+        "description": "The integration is added automatically after a Debian panel publishes its retained MQTT discovery message."
+      },
+      "confirm": {
+        "title": "Panel discovered: {name}",
+        "description": "Choose how this panel appears in Home Assistant and optionally assign it to an area.",
+        "data": {
+          "name": "Device name",
+          "area_id": "Area"
+        }
+      }
+    },
+    "abort": {
+      "no_devices_found": "No panel was discovered. Check that the Debian agent is running and connected to the same MQTT broker, then restart Home Assistant or retry discovery.",
+      "invalid_discovery": "The MQTT announcement is invalid or does not match the PCX86-kiosk topic contract."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Optional media player",
+        "description": "Select the Music Assistant Sendspin player for this panel. This setting can be changed after discovery.",
+        "data": {
+          "media_player_entity": "Sendspin media player"
+        }
+      }
+    }
+  }
+}

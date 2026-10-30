@@ -77,9 +77,53 @@ SENSORS = (
         icon="mdi:ip-network", entity_category=EntityCategory.DIAGNOSTIC,
     ),
     PanelSensorDescription(
+        key="mac_address", status_key="mac_address", name="MAC address",
+        icon="mdi:network", entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    PanelSensorDescription(
+        key="hostname", status_key="hostname", name="Host name",
+        icon="mdi:identifier", entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    PanelSensorDescription(
+        key="network_interface", status_key="network_interface", name="Network interface",
+        icon="mdi:ethernet", entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    PanelSensorDescription(
+        key="broadcast_address", status_key="broadcast_address", name="Broadcast address",
+        icon="mdi:ip-network-outline", entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    PanelSensorDescription(
+        key="wifi_ssid", status_key="wifi_ssid", name="Wi-Fi network",
+        icon="mdi:wifi", entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    PanelSensorDescription(
         key="wifi_signal_dbm", status_key="wifi_signal_dbm", name="Wi-Fi signal",
         icon="mdi:wifi", native_unit_of_measurement="dBm", state_class="measurement",
         entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    PanelSensorDescription(
+        key="os_name", status_key="os_name", name="Operating system",
+        icon="mdi:linux", entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    PanelSensorDescription(
+        key="os_version", status_key="os_version", name="Operating system version",
+        icon="mdi:package-variant", entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    PanelSensorDescription(
+        key="kernel_version", status_key="kernel_version", name="Kernel version",
+        icon="mdi:chip", entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    PanelSensorDescription(
+        key="architecture", status_key="architecture", name="Architecture",
+        icon="mdi:cpu-64-bit", entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    PanelSensorDescription(
+        key="manufacturer", status_key="manufacturer", name="Manufacturer",
+        icon="mdi:factory", entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    PanelSensorDescription(
+        key="model", status_key="model", name="Model",
+        icon="mdi:laptop", entity_category=EntityCategory.DIAGNOSTIC,
     ),
 )
 

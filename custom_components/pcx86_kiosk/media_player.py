@@ -14,7 +14,7 @@ from .const import CONF_MEDIA_PLAYER
 
 
 async def async_setup_entry(hass, entry, async_add_entities):
-    source = entry.data.get(CONF_MEDIA_PLAYER)
+    source = entry.options.get(CONF_MEDIA_PLAYER)
     if source:
         async_add_entities([PanelMediaPlayerProxy(hass, entry, source)])
 
