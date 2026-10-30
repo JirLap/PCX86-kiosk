@@ -80,14 +80,22 @@ def _async_update_device_registry(
 ) -> None:
     """Keep the HA device record current as MQTT reports network details."""
     registry = dr.async_get(hass)
-    device = registry.async_get_device(identifiers={(DOMAIN, entry.data[CONF_DEVICE_ID])})
+    identifier = (DOMAIN, entry.data[CONF_DEVICE_ID])
+    if hasattr(registry, "async_get_device_by_identifier"):
+        device = registry.async_get_device_by_identifier(identifier, entry.entry_id)
+    else:  # Compatibility with HA versions predating scoped device lookups.
+        device = registry.async_get_device(identifiers={identifier})
     if device is None:
         return
 
     changes = {}
     mac_address = metadata.get(CONF_MAC_ADDRESS)
     if isinstance(mac_address, str) and mac_address:
-        changes["connections"] = {(dr.CONNECTION_NETWORK_MAC, mac_address.lower())}
+        changes["new_connections"] = {
+            connection
+            for connection in device.connections
+            if connection[0] != dr.CONNECTION_NETWORK_MAC
+        } | {(dr.CONNECTION_NETWORK_MAC, mac_address.lower())}
     area_id = entry.data.get(CONF_AREA_ID)
     if area_id:
         changes["area_id"] = area_id
