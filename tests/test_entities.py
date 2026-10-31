@@ -23,6 +23,26 @@ def callback(function):
 
 
 class PushUpdateTests(unittest.TestCase):
+    def test_sleep_and_wake_use_mqtt_and_preserve_entity_ids_without_mac(self):
+        tree = ast.parse((ROOT/'button.py').read_text())
+        classes = [n for n in tree.body if isinstance(n,ast.ClassDef)]
+        sent = []
+        async def send(hass, entry, command):
+            sent.append(command)
+        namespace = {'ButtonEntity':FakeEntity, 'panel_state':lambda hass, entry:{'availability':'online'},
+                     'async_send_command':send}
+        exec(compile(ast.Module(body=classes,type_ignores=[]),'button.py','exec'),namespace)
+        entry = SimpleNamespace(data={'device_id':'kiosk'},entry_id='entry')
+        sleep = namespace['PanelCommandButton'](None,entry,'sleep','Sleep panel','mdi:sleep')
+        wake = namespace['PanelWakeButton'](None,entry)
+        self.assertEqual(sleep._attr_unique_id,'kiosk_suspend')
+        self.assertEqual(wake._attr_unique_id,'kiosk_wake_system')
+        self.assertTrue(wake.available)
+        for entity in (sleep,wake):
+            with self.assertRaises(StopIteration):
+                entity.async_press().send(None)
+        self.assertEqual(sent,['sleep','wake'])
+
     def test_command_buttons_follow_online_offline_messages(self):
         state = {}
         listeners = []

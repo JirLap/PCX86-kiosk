@@ -46,9 +46,6 @@
       "chromium_stop": {
         "name": "Stop kiosk browser"
       },
-      "suspend": {
-        "name": "Sleep notebook"
-      },
       "reboot": {
         "name": "Restart notebook"
       },
@@ -59,7 +56,10 @@
         "name": "Refresh status"
       },
       "wake_system": {
-        "name": "Wake notebook"
+        "name": "Wake panel"
+      },
+      "sleep": {
+        "name": "Sleep panel"
       }
     },
     "switch": {

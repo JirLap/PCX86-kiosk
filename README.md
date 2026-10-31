@@ -31,9 +31,9 @@ The previous experimental integration used the domain `panel_mqtt`. Remove that 
 
 ## Entities
 
-The integration exposes the status and controls reported by the Debian agent, including CPU, memory, storage, temperature and battery sensors; network and operating-system details; browser, camera and display status; kiosk URL and refresh; screen brightness; audio volume and mute; and fixed safe actions for browser restart, suspend, reboot and shutdown. After device discovery, the integration's optional settings can link a Music Assistant Sendspin media-player entity without adding fields to the initial discovery dialog.
+The integration exposes the status and controls reported by the Debian agent, including CPU, memory, storage, temperature and battery sensors; network and operating-system details; browser, camera and display status; kiosk URL and refresh; screen brightness; audio volume and mute; and fixed safe actions for browser restart, display sleep/wake, reboot and shutdown. After device discovery, the integration's optional settings can link a Music Assistant Sendspin media-player entity without adding fields to the initial discovery dialog.
 
-Some features depend on the laptop hardware or other services. Camera snapshots and RTSP streaming require a separately configured camera backend. Voice Assist uses Wyoming rather than MQTT. Whole-system suspend and Wake-on-LAN depend on Wi-Fi adapter, firmware, network and router support; `sleep` and `wake` only blank or restore the display.
+Some features depend on the laptop hardware or other services. Camera snapshots and RTSP streaming require a separately configured camera backend. Voice Assist uses Wyoming rather than MQTT. Sleep panel uses the Debian agent's display sleep mode: the display/backlight turn off and Chromium stops rendering, while Linux, Wi-Fi, MQTT and the separate Sendspin player remain running. Wake panel restores brightness and the previous browser state over MQTT. No magic packet or whole-system suspend is used.
 
 ## Language and appearance
 
@@ -51,4 +51,10 @@ MQTT credentials remain on the Debian panel. Use broker ACLs to restrict each pa
 
 ## Development status
 
-The component is a development preview. Controls, camera streaming, Wyoming voice and full-system suspend/wake still need validation on target hardware and a Home Assistant installation. Do not use it for a production or unattended kiosk yet.
+The component is a development preview. Controls, camera streaming, Wyoming voice and long-term display sleep/wake reliability still need validation on target hardware and a Home Assistant installation. Do not use it for a production or unattended kiosk yet.
+
+## Updating display sleep/wake
+
+Update the Debian companion and restart its desktop agent before updating this integration to 0.3.4 or newer. Older companion agents only blank the screen for MQTT `sleep`; the new agent additionally preserves brightness, stops/restores Chromium and recovers its MQTT worker after errors. The old `suspend` command is a safe display-sleep alias on the new agent, so an older HA installation cannot request whole-system suspend after the agent update.
+
+Existing sleep/wake entity unique IDs are preserved. Wake is an ordinary MQTT command and is available while the panel is connected, including display sleep. It cannot turn on a powered-off or physically suspended computer.

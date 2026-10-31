@@ -46,9 +46,6 @@
       "chromium_stop": {
         "name": "Ukončit prohlížeč kiosku"
       },
-      "suspend": {
-        "name": "Uspat notebook"
-      },
       "reboot": {
         "name": "Restartovat notebook"
       },
@@ -59,7 +56,10 @@
         "name": "Obnovit údaje"
       },
       "wake_system": {
-        "name": "Probudit notebook"
+        "name": "Probudit panel"
+      },
+      "sleep": {
+        "name": "Uspat panel"
       }
     },
     "switch": {

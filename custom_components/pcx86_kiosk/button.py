@@ -1,12 +1,9 @@
-"""Allow-listed panel actions and Wake-on-LAN."""
-
-import socket
+"""Allow-listed panel actions, including MQTT display sleep/wake."""
 
 from homeassistant.components.button import ButtonEntity
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
 from . import SIGNAL_STATUS, async_send_command, panel_device_info, panel_state
-from .const import CONF_BROADCAST_ADDRESS, CONF_MAC_ADDRESS
 
 
 COMMAND_BUTTONS = (
@@ -14,7 +11,7 @@ COMMAND_BUTTONS = (
     ("chromium_restart", "Restart kiosk browser", "mdi:restart"),
     ("chromium_start", "Start kiosk browser", "mdi:play"),
     ("chromium_stop", "Stop kiosk browser", "mdi:stop"),
-    ("suspend", "Sleep notebook", "mdi:sleep"),
+    ("sleep", "Sleep panel", "mdi:sleep"),
     ("reboot", "Restart notebook", "mdi:restart-alert"),
     ("shutdown", "Shut down notebook", "mdi:power"),
     ("status", "Refresh status", "mdi:information-refresh"),
@@ -23,8 +20,7 @@ COMMAND_BUTTONS = (
 
 async def async_setup_entry(hass, entry, async_add_entities):
     entities = [PanelCommandButton(hass, entry, *item) for item in COMMAND_BUTTONS]
-    if entry.data.get(CONF_MAC_ADDRESS):
-        entities.append(PanelWakeButton(hass, entry))
+    entities.append(PanelWakeButton(hass, entry))
     async_add_entities(entities)
 
 
@@ -40,7 +36,9 @@ class PanelCommandButton(ButtonEntity):
         self.command = command
         self._attr_translation_key = command
         self._attr_icon = icon
-        self._attr_unique_id = f"{entry.data['device_id']}_{command}"
+        # Retain the existing entity ID across the safer sleep-command change.
+        unique_key = "suspend" if command == "sleep" else command
+        self._attr_unique_id = f"{entry.data['device_id']}_{unique_key}"
 
     @property
     def device_info(self):
@@ -63,36 +61,14 @@ class PanelCommandButton(ButtonEntity):
         )
 
 
-class PanelWakeButton(ButtonEntity):
-    """Send a magic packet; this remains pressable while the panel is asleep."""
+class PanelWakeButton(PanelCommandButton):
+    """Restore the screen over MQTT; the notebook remains connected in sleep."""
 
     _attr_has_entity_name = True
     _attr_translation_key = "wake_system"
-    _attr_icon = "mdi:lan-connect"
+    _attr_icon = "mdi:monitor"
 
     def __init__(self, hass, entry):
-        self.hass = hass
-        self.entry = entry
+        super().__init__(hass, entry, "wake", "Wake panel", "mdi:monitor")
+        self._attr_translation_key = "wake_system"
         self._attr_unique_id = f"{entry.data['device_id']}_wake_system"
-
-    @property
-    def device_info(self):
-        return panel_device_info(self.hass, self.entry)
-
-    @property
-    def available(self):
-        return True
-
-    async def async_press(self):
-        mac = self.entry.data[CONF_MAC_ADDRESS]
-        broadcast = self.entry.data.get(CONF_BROADCAST_ADDRESS, "255.255.255.255")
-        await self.hass.async_add_executor_job(_send_magic_packet, mac, broadcast)
-
-
-def _send_magic_packet(mac: str, broadcast: str) -> None:
-    """Send a standard Wake-on-LAN packet over UDP broadcast."""
-    address = bytes.fromhex(mac.replace(":", ""))
-    packet = b"\xff" * 6 + address * 16
-    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-        sock.sendto(packet, (broadcast, 9))
