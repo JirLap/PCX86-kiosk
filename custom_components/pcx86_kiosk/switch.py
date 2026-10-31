@@ -47,7 +47,7 @@ class PanelControlSwitch(SwitchEntity):
         self.status_key = status_key
         self.command_on = command_on
         self.command_off = command_off
-        self._attr_name = name
+        self._attr_translation_key = key
         self._attr_icon = icon
         self._attr_unique_id = f"{entry.data['device_id']}_{key}"
 

@@ -30,7 +30,7 @@ class PanelStateBinarySensor(BinarySensorEntity):
         self.hass = hass
         self.entry = entry
         self.key = key
-        self._attr_name = name
+        self._attr_translation_key = key
         self._attr_device_class = device_class
         self._attr_icon = icon
         self._attr_unique_id = f"{entry.data['device_id']}_{key}"

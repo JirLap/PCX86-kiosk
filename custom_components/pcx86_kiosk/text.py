@@ -14,7 +14,7 @@ class PanelKioskUrlText(TextEntity):
     """Edit the URL opened by the kiosk browser."""
 
     _attr_has_entity_name = True
-    _attr_name = "Kiosk URL"
+    _attr_translation_key = "kiosk_url"
     _attr_icon = "mdi:link-variant"
     _attr_mode = TextMode.TEXT
     _attr_native_min = 1

@@ -1,0 +1,200 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "PCX86-kiosk",
+        "description": "The integration is added automatically after a Debian panel publishes its retained MQTT discovery message."
+      },
+      "confirm": {
+        "title": "Panel discovered: {name}",
+        "description": "Choose a name for this panel and optionally assign it to an area. Home Assistant may also show its standard device/area summary after confirmation.",
+        "data": {
+          "name": "Device name",
+          "area_id": "Area"
+        }
+      }
+    },
+    "abort": {
+      "no_devices_found": "No panel was discovered. Check that the Debian agent is running and connected to the same MQTT broker, then restart Home Assistant or retry discovery.",
+      "invalid_discovery": "The MQTT announcement is invalid or does not match the PCX86-kiosk topic contract.",
+      "already_configured": "This panel is already configured.",
+      "already_in_progress": "Setup for this panel is already in progress."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Optional media player",
+        "description": "Select the Music Assistant Sendspin player for this panel. This setting can be changed after discovery.",
+        "data": {
+          "media_player_entity": "Sendspin media player"
+        }
+      }
+    }
+  },
+  "entity": {
+    "button": {
+      "kiosk_refresh": {
+        "name": "Refresh kiosk page"
+      },
+      "chromium_restart": {
+        "name": "Restart kiosk browser"
+      },
+      "chromium_start": {
+        "name": "Start kiosk browser"
+      },
+      "chromium_stop": {
+        "name": "Stop kiosk browser"
+      },
+      "suspend": {
+        "name": "Sleep notebook"
+      },
+      "reboot": {
+        "name": "Restart notebook"
+      },
+      "shutdown": {
+        "name": "Shut down notebook"
+      },
+      "status": {
+        "name": "Refresh status"
+      },
+      "wake_system": {
+        "name": "Wake notebook"
+      }
+    },
+    "switch": {
+      "screen": {
+        "name": "Screen"
+      },
+      "kiosk": {
+        "name": "Kiosk browser"
+      },
+      "camera": {
+        "name": "Camera"
+      },
+      "microphone": {
+        "name": "Microphone"
+      },
+      "audio_mute": {
+        "name": "Mute speakers"
+      }
+    },
+    "binary_sensor": {
+      "availability": {
+        "name": "Online"
+      },
+      "monitor": {
+        "name": "Screen"
+      },
+      "chromium": {
+        "name": "Kiosk browser"
+      },
+      "camera": {
+        "name": "Camera"
+      },
+      "microphone_muted": {
+        "name": "Microphone muted"
+      }
+    },
+    "sensor": {
+      "cpu_percent": {
+        "name": "CPU use"
+      },
+      "memory_percent": {
+        "name": "Memory use"
+      },
+      "memory_used_bytes": {
+        "name": "Used memory"
+      },
+      "disk_free_bytes": {
+        "name": "Available storage"
+      },
+      "uptime_seconds": {
+        "name": "Uptime"
+      },
+      "available_updates": {
+        "name": "Updates available"
+      },
+      "cpu_temperature_c": {
+        "name": "CPU temperature"
+      },
+      "microphone_volume": {
+        "name": "Microphone volume"
+      },
+      "battery_percent": {
+        "name": "Battery level"
+      },
+      "battery_voltage_v": {
+        "name": "Battery voltage"
+      },
+      "charging_status": {
+        "name": "Charging status"
+      },
+      "ip_address": {
+        "name": "IP address"
+      },
+      "mac_address": {
+        "name": "MAC address"
+      },
+      "hostname": {
+        "name": "Host name"
+      },
+      "network_interface": {
+        "name": "Network interface"
+      },
+      "broadcast_address": {
+        "name": "Broadcast address"
+      },
+      "wifi_ssid": {
+        "name": "Wi-Fi network"
+      },
+      "wifi_signal_dbm": {
+        "name": "Wi-Fi signal"
+      },
+      "os_name": {
+        "name": "Operating system"
+      },
+      "os_version": {
+        "name": "Operating system version"
+      },
+      "kernel_version": {
+        "name": "Kernel version"
+      },
+      "architecture": {
+        "name": "Architecture"
+      },
+      "manufacturer": {
+        "name": "Manufacturer"
+      },
+      "model": {
+        "name": "Model"
+      }
+    },
+    "number": {
+      "system_volume": {
+        "name": "System volume"
+      },
+      "screen_brightness": {
+        "name": "Screen brightness"
+      },
+      "microphone_volume": {
+        "name": "Microphone volume"
+      }
+    },
+    "text": {
+      "kiosk_url": {
+        "name": "Kiosk URL"
+      }
+    },
+    "camera": {
+      "laptop_camera": {
+        "name": "Laptop camera"
+      }
+    },
+    "media_player": {
+      "media_player": {
+        "name": "Media player"
+      }
+    }
+  }
+}

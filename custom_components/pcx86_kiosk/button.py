@@ -3,6 +3,7 @@
 import socket
 
 from homeassistant.components.button import ButtonEntity
+from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
 from . import SIGNAL_STATUS, async_send_command, panel_device_info, panel_state
 from .const import CONF_BROADCAST_ADDRESS, CONF_MAC_ADDRESS
@@ -31,12 +32,13 @@ class PanelCommandButton(ButtonEntity):
     """Publish one fixed command supported by the Debian agent."""
 
     _attr_has_entity_name = True
+    _attr_should_poll = False
 
     def __init__(self, hass, entry, command, name, icon):
         self.hass = hass
         self.entry = entry
         self.command = command
-        self._attr_name = name
+        self._attr_translation_key = command
         self._attr_icon = icon
         self._attr_unique_id = f"{entry.data['device_id']}_{command}"
 
@@ -51,12 +53,21 @@ class PanelCommandButton(ButtonEntity):
     async def async_press(self):
         await async_send_command(self.hass, self.entry, self.command)
 
+    async def async_added_to_hass(self):
+        self.async_on_remove(
+            async_dispatcher_connect(
+                self.hass,
+                SIGNAL_STATUS.format(self.entry.entry_id),
+                self.async_write_ha_state,
+            )
+        )
+
 
 class PanelWakeButton(ButtonEntity):
     """Send a magic packet; this remains pressable while the panel is asleep."""
 
     _attr_has_entity_name = True
-    _attr_name = "Wake notebook"
+    _attr_translation_key = "wake_system"
     _attr_icon = "mdi:lan-connect"
 
     def __init__(self, hass, entry):

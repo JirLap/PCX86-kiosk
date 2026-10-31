@@ -40,7 +40,7 @@ class PCX86KioskConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     @staticmethod
     def async_get_options_flow(config_entry):
         """Return optional settings kept outside the discovery confirmation."""
-        return PCX86KioskOptionsFlow(config_entry)
+        return PCX86KioskOptionsFlow()
 
     async def async_step_user(self, user_input=None):
         """Tell manual setup users to wait for MQTT discovery."""
@@ -125,6 +125,7 @@ class PCX86KioskConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(
             step_id="confirm",
+            description_placeholders={"name": self._discovered_name},
             data_schema=vol.Schema(
                 {
                     vol.Required(CONF_NAME, default=self._discovered_name): str,
@@ -136,9 +137,6 @@ class PCX86KioskConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
 class PCX86KioskOptionsFlow(config_entries.OptionsFlow):
     """Configure an optional Music Assistant player after device discovery."""
-
-    def __init__(self, config_entry) -> None:
-        self.config_entry = config_entry
 
     async def async_step_init(self, user_input=None):
         """Select the Sendspin media-player entity, if one is used."""

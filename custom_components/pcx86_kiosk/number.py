@@ -19,7 +19,7 @@ class PanelVolumeNumber(NumberEntity):
     """Set the Debian output volume using the agent's validated command."""
 
     _attr_has_entity_name = True
-    _attr_name = "System volume"
+    _attr_translation_key = "system_volume"
     _attr_icon = "mdi:volume-high"
     _attr_native_min_value = 0
     _attr_native_max_value = 150
@@ -63,7 +63,7 @@ class PanelVolumeNumber(NumberEntity):
 class PanelBrightnessNumber(PanelVolumeNumber):
     """Set the laptop panel backlight when its driver exposes a control."""
 
-    _attr_name = "Screen brightness"
+    _attr_translation_key = "screen_brightness"
     _attr_icon = "mdi:brightness-6"
     _attr_native_max_value = 100
     _attr_native_unit_of_measurement = PERCENTAGE
@@ -91,7 +91,7 @@ class PanelBrightnessNumber(PanelVolumeNumber):
 class PanelMicrophoneVolumeNumber(PanelVolumeNumber):
     """Set microphone capture gain when PulseAudio/PipeWire exposes a source."""
 
-    _attr_name = "Microphone volume"
+    _attr_translation_key = "microphone_volume"
     _attr_icon = "mdi:microphone"
 
     def __init__(self, hass, entry):

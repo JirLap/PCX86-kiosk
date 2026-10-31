@@ -1,0 +1,200 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "PCX86-kiosk",
+        "description": "Integrace nabídne přidání automaticky, jakmile panel Debianu odešle své MQTT discovery oznámení."
+      },
+      "confirm": {
+        "title": "Nalezen panel: {name}",
+        "description": "Zvolte název panelu a případně oblast. Po potvrzení může Home Assistant ještě zobrazit svůj standardní přehled zařízení a přiřazení oblasti.",
+        "data": {
+          "name": "Název zařízení",
+          "area_id": "Oblast"
+        }
+      }
+    },
+    "abort": {
+      "no_devices_found": "Nebyl nalezen žádný panel. Ověřte, že běží aktuální agent Debianu a je připojený ke stejnému MQTT brokeru jako Home Assistant.",
+      "invalid_discovery": "Oznámení MQTT je neplatné nebo neodpovídá topicům PCX86-kiosk.",
+      "already_configured": "Tento panel je již přidaný.",
+      "already_in_progress": "Přidávání tohoto panelu již probíhá."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Volitelný přehrávač médií",
+        "description": "Vyberte přehrávač Music Assistant Sendspin pro tento panel. Nastavení lze později změnit.",
+        "data": {
+          "media_player_entity": "Přehrávač Sendspin"
+        }
+      }
+    }
+  },
+  "entity": {
+    "button": {
+      "kiosk_refresh": {
+        "name": "Obnovit stránku kiosku"
+      },
+      "chromium_restart": {
+        "name": "Restartovat prohlížeč kiosku"
+      },
+      "chromium_start": {
+        "name": "Spustit prohlížeč kiosku"
+      },
+      "chromium_stop": {
+        "name": "Ukončit prohlížeč kiosku"
+      },
+      "suspend": {
+        "name": "Uspat notebook"
+      },
+      "reboot": {
+        "name": "Restartovat notebook"
+      },
+      "shutdown": {
+        "name": "Vypnout notebook"
+      },
+      "status": {
+        "name": "Obnovit údaje"
+      },
+      "wake_system": {
+        "name": "Probudit notebook"
+      }
+    },
+    "switch": {
+      "screen": {
+        "name": "Obrazovka"
+      },
+      "kiosk": {
+        "name": "Prohlížeč kiosku"
+      },
+      "camera": {
+        "name": "Kamera"
+      },
+      "microphone": {
+        "name": "Mikrofon"
+      },
+      "audio_mute": {
+        "name": "Ztlumit reproduktory"
+      }
+    },
+    "binary_sensor": {
+      "availability": {
+        "name": "Připojení"
+      },
+      "monitor": {
+        "name": "Obrazovka"
+      },
+      "chromium": {
+        "name": "Prohlížeč kiosku"
+      },
+      "camera": {
+        "name": "Kamera"
+      },
+      "microphone_muted": {
+        "name": "Ztlumený mikrofon"
+      }
+    },
+    "sensor": {
+      "cpu_percent": {
+        "name": "Využití procesoru"
+      },
+      "memory_percent": {
+        "name": "Využití paměti"
+      },
+      "memory_used_bytes": {
+        "name": "Použitá paměť"
+      },
+      "disk_free_bytes": {
+        "name": "Volné místo na disku"
+      },
+      "uptime_seconds": {
+        "name": "Doba běhu"
+      },
+      "available_updates": {
+        "name": "Dostupné aktualizace"
+      },
+      "cpu_temperature_c": {
+        "name": "Teplota procesoru"
+      },
+      "microphone_volume": {
+        "name": "Hlasitost mikrofonu"
+      },
+      "battery_percent": {
+        "name": "Stav baterie"
+      },
+      "battery_voltage_v": {
+        "name": "Napětí baterie"
+      },
+      "charging_status": {
+        "name": "Stav nabíjení"
+      },
+      "ip_address": {
+        "name": "IP adresa"
+      },
+      "mac_address": {
+        "name": "MAC adresa"
+      },
+      "hostname": {
+        "name": "Název počítače"
+      },
+      "network_interface": {
+        "name": "Síťové rozhraní"
+      },
+      "broadcast_address": {
+        "name": "Adresa pro síťové probuzení"
+      },
+      "wifi_ssid": {
+        "name": "Síť Wi-Fi"
+      },
+      "wifi_signal_dbm": {
+        "name": "Signál Wi-Fi"
+      },
+      "os_name": {
+        "name": "Operační systém"
+      },
+      "os_version": {
+        "name": "Verze operačního systému"
+      },
+      "kernel_version": {
+        "name": "Verze jádra"
+      },
+      "architecture": {
+        "name": "Architektura"
+      },
+      "manufacturer": {
+        "name": "Výrobce"
+      },
+      "model": {
+        "name": "Model"
+      }
+    },
+    "number": {
+      "system_volume": {
+        "name": "Hlasitost reproduktorů"
+      },
+      "screen_brightness": {
+        "name": "Jas obrazovky"
+      },
+      "microphone_volume": {
+        "name": "Hlasitost mikrofonu"
+      }
+    },
+    "text": {
+      "kiosk_url": {
+        "name": "Adresa stránky kiosku"
+      }
+    },
+    "camera": {
+      "laptop_camera": {
+        "name": "Kamera notebooku"
+      }
+    },
+    "media_player": {
+      "media_player": {
+        "name": "Přehrávač médií"
+      }
+    }
+  }
+}

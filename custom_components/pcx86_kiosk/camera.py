@@ -3,6 +3,7 @@
 from aiohttp import ClientError, ClientTimeout
 
 from homeassistant.components.camera import Camera, CameraEntityFeature
+from homeassistant.core import callback
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
@@ -17,7 +18,7 @@ class PanelCamera(Camera):
     """Camera entity whose media transport is HTTP snapshot plus RTSP stream."""
 
     _attr_has_entity_name = True
-    _attr_name = "Laptop camera"
+    _attr_translation_key = "laptop_camera"
     _attr_icon = "mdi:camera"
     _attr_supported_features = CameraEntityFeature.STREAM | CameraEntityFeature.ON_OFF
 
@@ -79,6 +80,7 @@ class PanelCamera(Camera):
             )
         )
 
+    @callback
     def _status_updated(self):
         self.__dict__.pop("is_on", None)
         self.async_write_ha_state()

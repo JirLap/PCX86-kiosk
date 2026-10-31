@@ -2,6 +2,8 @@
 
 # PCX86-kiosk
 
+![PCX86-kiosk wall-panel icon](custom_components/pcx86_kiosk/brand/icon.png)
+
 A Home Assistant custom integration for a Debian XFCE/Chromium kiosk panel. Its companion Debian installer and MQTT agent are maintained in [PCX86-kiosk-debian](https://github.com/JirLap/PCX86-kiosk-debian).
 
 This project is independent of [HAOS-kiosk](https://github.com/JirLap/HAOS-kiosk), which is used to display Frigate cameras.
@@ -32,6 +34,14 @@ The previous experimental integration used the domain `panel_mqtt`. Remove that 
 The integration exposes the status and controls reported by the Debian agent, including CPU, memory, storage, temperature and battery sensors; network and operating-system details; browser, camera and display status; kiosk URL and refresh; screen brightness; audio volume and mute; and fixed safe actions for browser restart, suspend, reboot and shutdown. After device discovery, the integration's optional settings can link a Music Assistant Sendspin media-player entity without adding fields to the initial discovery dialog.
 
 Some features depend on the laptop hardware or other services. Camera snapshots and RTSP streaming require a separately configured camera backend. Voice Assist uses Wyoming rather than MQTT. Whole-system suspend and Wake-on-LAN depend on Wi-Fi adapter, firmware, network and router support; `sleep` and `wake` only blank or restore the display.
+
+## Language and appearance
+
+The integration includes English and Czech translations in `custom_components/pcx86_kiosk/translations/en.json` and `cs.json`. Home Assistant selects the applicable translations; no separate HACS language package is needed. Configuration labels and entity names use these translations. Entity IDs and names explicitly customized by the user are preserved.
+
+The original wall-panel icon is bundled in `custom_components/pcx86_kiosk/brand/` (256 and 512 pixel PNGs, plus an editable SVG source). Home Assistant 2026.3 or newer loads the local integration brand icon. External clients with their own brand caches may refresh it separately.
+
+The discovery flow has one integration-specific name/area form. Home Assistant can also show its own final device/area assignment summary after the entry is created. Do not remove a working device solely to repeat discovery.
 
 ## MQTT topics
 

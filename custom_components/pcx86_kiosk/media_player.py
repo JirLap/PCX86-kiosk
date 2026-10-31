@@ -23,7 +23,7 @@ class PanelMediaPlayerProxy(MediaPlayerEntity):
     """Route playback and volume to Music Assistant's Sendspin entity."""
 
     _attr_has_entity_name = True
-    _attr_name = "Media player"
+    _attr_translation_key = "media_player"
     _attr_icon = "mdi:speaker"
     _attr_should_poll = False
 
