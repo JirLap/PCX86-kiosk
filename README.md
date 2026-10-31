@@ -25,8 +25,6 @@ The setup sequence is:
 
 The retained discovery announcement is replayed when Home Assistant subscribes, so the panel does not need to be reconfigured if it started before the integration was installed. MQTT's native discovery prefix does not need to be changed; this integration uses Home Assistant's custom-integration MQTT discovery hook.
 
-The previous experimental integration used the domain `panel_mqtt`. Remove that old integration entry before installing this renamed `pcx86_kiosk` component; Home Assistant cannot automatically migrate config entries across domains.
-
 ## Entities
 
 The integration exposes the status and controls reported by the Debian agent, including CPU, memory, storage, temperature and battery sensors; network and operating-system details; browser, camera and display status; kiosk URL and refresh; screen brightness; audio volume and mute; and fixed safe actions for browser restart, display sleep/wake, reboot and shutdown. After device discovery, the integration's optional settings can link a Music Assistant Sendspin media-player entity without adding fields to the initial discovery dialog.
