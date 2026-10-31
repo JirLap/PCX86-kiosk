@@ -6,8 +6,6 @@
 
 A Home Assistant custom integration for a Debian XFCE/Chromium kiosk panel. Its companion Debian installer and MQTT agent are maintained in [PCX86-kiosk-debian](https://github.com/JirLap/PCX86-kiosk-debian).
 
-This project is independent of [HAOS-kiosk](https://github.com/JirLap/HAOS-kiosk), which is used to display Frigate cameras.
-
 ## Discovery and setup
 
 The panel announces itself over the MQTT broker already configured in Home Assistant. After installing this repository through HACS and restarting Home Assistant, a running Debian agent publishes a retained discovery message. Home Assistant then offers the panel for confirmation. The dialog asks only for a device name and an optional area; the device ID, MAC address, IP address, and MQTT topics come from the announcement.
