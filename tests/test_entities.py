@@ -23,6 +23,24 @@ def callback(function):
 
 
 class PushUpdateTests(unittest.TestCase):
+    def test_screen_switch_follows_screensaver_and_sends_mqtt_wake(self):
+        tree = ast.parse((ROOT/'switch.py').read_text())
+        cls = next(n for n in tree.body if isinstance(n,ast.ClassDef))
+        state = {'availability':'online','monitor':'off','screensaver_active':True}
+        sent = []
+        async def send(hass, entry, command):
+            sent.append(command)
+        namespace = {'SwitchEntity':FakeEntity,'panel_state':lambda hass,entry:state,'async_send_command':send}
+        exec(compile(ast.Module(body=[cls],type_ignores=[]),'switch.py','exec'),namespace)
+        entry = SimpleNamespace(data={'device_id':'kiosk'})
+        entity = namespace['PanelControlSwitch'](None,entry,'screen','Screen','monitor','wake','sleep','mdi:monitor')
+        self.assertFalse(entity.is_on)
+        with self.assertRaises(StopIteration):
+            entity.async_turn_on().send(None)
+        self.assertEqual(sent,['wake'])
+        state.update(monitor='on',screensaver_active=False)
+        self.assertTrue(entity.is_on)
+
     def test_sleep_and_wake_use_mqtt_and_preserve_entity_ids_without_mac(self):
         tree = ast.parse((ROOT/'button.py').read_text())
         classes = [n for n in tree.body if isinstance(n,ast.ClassDef)]

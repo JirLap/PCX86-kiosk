@@ -77,6 +77,9 @@
       },
       "audio_mute": {
         "name": "Mute speakers"
+      },
+      "screensaver": {
+        "name": "Screensaver"
       }
     },
     "binary_sensor": {
@@ -94,6 +97,9 @@
       },
       "microphone_muted": {
         "name": "Microphone muted"
+      },
+      "screensaver_active": {
+        "name": "Screensaver active"
       }
     },
     "sensor": {
@@ -179,6 +185,9 @@
       },
       "microphone_volume": {
         "name": "Microphone volume"
+      },
+      "screensaver_timeout": {
+        "name": "Screensaver timeout"
       }
     },
     "text": {

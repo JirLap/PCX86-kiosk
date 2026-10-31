@@ -1,12 +1,14 @@
 """Panel screen, kiosk, camera, and microphone controls."""
 
 from homeassistant.components.switch import SwitchEntity
+from homeassistant.const import EntityCategory
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
 from . import SIGNAL_STATUS, async_send_command, panel_device_info, panel_state
 
 
 SWITCHES = (
+    ("screensaver", "Screensaver", "screensaver_enabled", "screensaver_on", "screensaver_off", "mdi:monitor-off"),
     ("screen", "Screen", "monitor", "wake", "sleep", "mdi:monitor"),
     ("kiosk", "Kiosk browser", "chromium", "kiosk_start", "kiosk_stop", "mdi:web"),
     ("camera", "Camera", "camera", "camera_start", "camera_stop", "mdi:camera"),
@@ -50,6 +52,8 @@ class PanelControlSwitch(SwitchEntity):
         self._attr_translation_key = key
         self._attr_icon = icon
         self._attr_unique_id = f"{entry.data['device_id']}_{key}"
+        if key == "screensaver":
+            self._attr_entity_category = EntityCategory.CONFIG
 
     @property
     def device_info(self):

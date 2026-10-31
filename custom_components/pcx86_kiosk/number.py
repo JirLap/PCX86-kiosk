@@ -1,7 +1,7 @@
 """Numeric controls for supported panel capabilities."""
 
 from homeassistant.components.number import NumberEntity
-from homeassistant.const import PERCENTAGE
+from homeassistant.const import PERCENTAGE, EntityCategory, UnitOfTime
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
 from . import SIGNAL_STATUS, async_send_command, panel_device_info, panel_state
@@ -12,6 +12,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
         PanelVolumeNumber(hass, entry),
         PanelMicrophoneVolumeNumber(hass, entry),
         PanelBrightnessNumber(hass, entry),
+        PanelScreensaverTimeoutNumber(hass, entry),
     ])
 
 
@@ -112,4 +113,31 @@ class PanelMicrophoneVolumeNumber(PanelVolumeNumber):
         await async_send_command(
             self.hass, self.entry, f"mic_volume_set:{round(value)}"
         )
+
+
+class PanelScreensaverTimeoutNumber(PanelVolumeNumber):
+    """Configure the automatic display-off delay, in minutes."""
+
+    _attr_translation_key = "screensaver_timeout"
+    _attr_icon = "mdi:timer-outline"
+    _attr_native_min_value = 1
+    _attr_native_max_value = 240
+    _attr_native_unit_of_measurement = UnitOfTime.MINUTES
+    _attr_entity_category = EntityCategory.CONFIG
+
+    def __init__(self, hass, entry):
+        super().__init__(hass, entry)
+        self._attr_unique_id = f"{entry.data['device_id']}_screensaver_timeout"
+
+    @property
+    def native_value(self):
+        return panel_state(self.hass, self.entry).get("screensaver_timeout")
+
+    @property
+    def available(self):
+        state = panel_state(self.hass, self.entry)
+        return state.get("availability") == "online" and "screensaver_timeout" in state
+
+    async def async_set_native_value(self, value):
+        await async_send_command(self.hass, self.entry, f"screensaver_timeout_set:{round(value)}")
 

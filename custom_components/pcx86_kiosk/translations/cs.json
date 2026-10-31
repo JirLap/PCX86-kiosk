@@ -77,6 +77,9 @@
       },
       "audio_mute": {
         "name": "Ztlumit reproduktory"
+      },
+      "screensaver": {
+        "name": "Spořič obrazovky"
       }
     },
     "binary_sensor": {
@@ -94,6 +97,9 @@
       },
       "microphone_muted": {
         "name": "Ztlumený mikrofon"
+      },
+      "screensaver_active": {
+        "name": "Spořič aktivní"
       }
     },
     "sensor": {
@@ -179,6 +185,9 @@
       },
       "microphone_volume": {
         "name": "Hlasitost mikrofonu"
+      },
+      "screensaver_timeout": {
+        "name": "Časový limit spořiče"
       }
     },
     "text": {

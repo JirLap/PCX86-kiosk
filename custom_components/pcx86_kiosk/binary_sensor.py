@@ -7,6 +7,7 @@ from . import SIGNAL_STATUS, panel_device_info, panel_state
 
 
 ENTITIES = (
+    ("screensaver_active", "Screensaver active", None, "mdi:monitor-off"),
     ("availability", "Online", "connectivity", "mdi:lan-connect"),
     ("monitor", "Screen", "power", "mdi:monitor"),
     ("chromium", "Kiosk browser", None, "mdi:web"),
@@ -52,6 +53,8 @@ class PanelStateBinarySensor(BinarySensorEntity):
             return value in ("on", "running", True)
         if self.key == "microphone_muted":
             return value in (True, "on", "muted")
+        if self.key == "screensaver_active":
+            return value is True
         return None
 
     @property
