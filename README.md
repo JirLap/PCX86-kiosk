@@ -29,7 +29,15 @@ The retained discovery announcement is replayed when Home Assistant subscribes, 
 
 The integration exposes the status and controls reported by the Debian agent, including CPU, memory, storage, temperature and battery sensors; network and operating-system details; browser, camera and display status; kiosk URL and refresh; screen brightness; audio volume and mute; and fixed safe actions for browser restart, display sleep/wake, reboot and shutdown. After device discovery, the integration's optional settings can link a Music Assistant Sendspin media-player entity without adding fields to the initial discovery dialog.
 
-Some features depend on the laptop hardware or other services. Camera snapshots and RTSP streaming require a separately configured camera backend. Voice Assist uses Wyoming rather than MQTT. Sleep panel uses the Debian agent's display sleep mode: the display/backlight turn off and Chromium stops rendering, while Linux, Wi-Fi, MQTT and the separate Sendspin player remain running. Wake panel restores brightness and the previous browser state over MQTT. No magic packet or whole-system suspend is used.
+Some features depend on the laptop hardware or other services. Camera snapshots and RTSP streaming require a separately configured camera backend. Optional Voice Assist uses Linux Voice Assistant and HA's built-in ESPHome integration; see the voice setup below. Sleep panel uses the Debian agent's display sleep mode: the display/backlight turn off and Chromium stops rendering, while Linux, Wi-Fi, MQTT and the separate Sendspin player remain running. Wake panel restores brightness and the previous browser state over MQTT. No magic packet or whole-system suspend is used.
+
+## Optional voice assistant
+
+The [Debian companion's voice installer](https://github.com/JirLap/PCX86-kiosk-debian/blob/main/docs/voice-assist.md) installs a pinned Linux Voice Assistant release for the laptop microphone and speaker. Start its shell launcher with `--voice` to add voice independently of MQTT/kiosk setup. Existing configuration is offered as defaults when it is run again.
+
+Add the resulting voice satellite through HA's built-in **ESPHome** integration, using the panel IP and port **6053** if automatic discovery is unavailable. Select the intended Assist pipeline, language and area in HA. Voice has its own integration entry and uses the native Assist satellite controls; it does not require a PCX86 component update or an HA restart. Wake-word detection runs on the laptop; the selected HA pipeline handles recognition, conversation and spoken responses.
+
+The voice installer retains the existing PulseAudio server and Music Assistant / Sendspin music playback. LVA also exposes a response/media player; keep using Sendspin for music. Automatic music ducking and acoustic echo cancellation are not configured by this installer. See the companion guide for HA prerequisites, microphone selection, host-specific API access rules and commissioning tests.
 
 ## Language and appearance
 
@@ -47,7 +55,7 @@ MQTT credentials remain on the Debian panel. Use broker ACLs to restrict each pa
 
 ## Development status
 
-The component is a development preview. Controls, camera streaming, Wyoming voice and long-term display sleep/wake reliability still need validation on target hardware and a Home Assistant installation. Do not use it for a production or unattended kiosk yet.
+The component is a development preview. Controls, camera streaming, voice interaction and long-term display sleep/wake reliability still need validation on target hardware and a Home Assistant installation. Do not use it for a production or unattended kiosk yet.
 
 ## Updating display sleep/wake
 
